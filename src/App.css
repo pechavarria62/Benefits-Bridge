@@ -11,6 +11,12 @@
 .zipcode-title {
   font-size: 2rem;
   font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+.welcome-title {
+  font-size: 2rem;
+  font-weight: bold;
   color: #5a3ec8;
   margin-bottom: 0.5rem;
 }
@@ -53,8 +59,26 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  margin-top: 0.5rem;
 }
 
 .zipcode-button:hover {
   background-color: #482ea3;
+}
+.job-form{
+  color: #5a3ec8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* horizontal centering */
+  justify-content: center; /* vertical centering */
+}
+.job-form-select {
+  border-radius: 6px;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  
+}
+
+ul {
+  list-style: none;
 }

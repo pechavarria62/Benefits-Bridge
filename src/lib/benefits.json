@@ -1,7 +1,9 @@
 {
   "benefits": [
-    { "id": "snap", "name": "SNAP"},
-    { "id": "housing", "name": "Housing" },
-    { "id": "medicaid", "name": "Medicaid"  }
+    { "id": "snap", "name": "SNAP","amount": 150,
+      "unit": "month"
+      },
+    { "id": "housing", "name": "Housing","unit": "month","amount": 950 },
+    { "id": "medicaid", "name": "Medicaid","unit": "month","amount": 80  }
   ]
 }

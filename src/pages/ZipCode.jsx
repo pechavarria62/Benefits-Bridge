@@ -7,25 +7,27 @@ function ZipCode() {
   showForm: false,
   selectedBenefits: [],
   jobDetails: {
-    employment: "Full-time",
+    employment: "Full-time ",
     hours: 40,
-    payType: "Hourly",
-    payRate: "Weekly",
+    payType: "Hourly ",
+    payRate: "Weekly ",
   },
 });
 const [benefits, setBenefits] = useState([]);
 
-
+// Load benefits data when component mounts
   useEffect(() => {
     setBenefits(benefitsData.benefits);
   }, []);
 
+  // Called when the user clicks "Continue" after entering ZIP
   const handleContinue = () => {
     if (formData.zip.trim()) {
       setFormData((prev) => ({ ...prev, showForm: true }));
     }
   };
 
+  // Toggle a benefit on/off in selectedBenefits
   const toggleBenefit = (id) => {
     setFormData((prev) => ({
       ...prev,
@@ -35,6 +37,7 @@ const [benefits, setBenefits] = useState([]);
     }));
   };
 
+  // Update jobDetails fields when user changes inputs
  const handleJobChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -45,7 +48,7 @@ const [benefits, setBenefits] = useState([]);
      <div className="zipcode-container">
       {!formData.showForm ? (
         <>
-          <h1 className="zipcode-title">Welcome to Job</h1>
+          <h1 className="welcome-title">Welcome to Job</h1>
           <p className="zipcode-subtext">
             Understand how taking a new job can affect your government benefits.
             Enter your ZIP code to get started.
@@ -57,7 +60,7 @@ const [benefits, setBenefits] = useState([]);
               placeholder="Enter ZIP Code"
               value={formData.zip}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, zip: e.target.value }))
+                setFormData((prev) => ({ ...prev, zip: e.target.value })) // Update ZIP in state
               }
               className="zipcode-input"
             />
@@ -78,10 +81,10 @@ const [benefits, setBenefits] = useState([]);
                     checked={formData.selectedBenefits.includes(benefit.id)}
                     onChange={() => toggleBenefit(benefit.id)}
                   />
-                  <span className="benefit-icon">{benefit.icon}</span>
-                  <span className="benefit-name">{benefit.name}</span>
+                  <span className="benefit-icon">{benefit.icon} </span>
+                  <span className="benefit-name">{benefit.name} </span>
                   <span className="benefit-amount">
-                    ${benefit.amount}/{benefit.unit}
+                    ${benefit.amount} / {benefit.unit}
                   </span>
                 </label>
               </li>
@@ -92,10 +95,10 @@ const [benefits, setBenefits] = useState([]);
           <div className="job-form">
             <label>
               Employment
-              <select
+              <select className="job-form-select"
                 value={formData.jobDetails.employment}
                 onChange={(e) =>
-                  handleJobChange("employment", e.target.value)
+                  handleJobChange("employment ", e.target.value)
                 }
               >
                 <option>Full-time</option>
@@ -105,9 +108,9 @@ const [benefits, setBenefits] = useState([]);
             </label>
 
             <label>
-              Hours per Week
-              <select
-                value={formData.jobDetails.hours}
+              Hours per Week  
+              <select className="job-form-select"
+                value={ formData.jobDetails.hours}
                 onChange={(e) =>
                   handleJobChange("hours", Number(e.target.value))
                 }
@@ -122,7 +125,7 @@ const [benefits, setBenefits] = useState([]);
 
             <label>
               Pay Type
-              <select
+              <select className="job-form-select"
                 value={formData.jobDetails.payType}
                 onChange={(e) => handleJobChange("payType", e.target.value)}
               >
@@ -133,7 +136,7 @@ const [benefits, setBenefits] = useState([]);
 
             <label>
               Pay Rate
-              <select
+              <select className="job-form-select"
                 value={formData.jobDetails.payRate}
                 onChange={(e) => handleJobChange("payRate", e.target.value)}
               >
