@@ -6,7 +6,6 @@ import {
   Navigate,
 } from 'react-router-dom'
 import ZipCode from './pages/ZipCode'
-import Results from './pages/results'
 import './App.css'
 
 function App() {
@@ -15,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<ZipCode />} />
-        <Route path="/results" element={<Results />} />
+        {/* <Route path="/results" element={<Results />} />0 */}
       </Routes>
     </Router>
   )
