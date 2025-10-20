@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import benefitsData from "../lib/benefits.json";
+import Iconz from '../components/IconMapper';
 
 function ZipCode() {
  const [formData, setFormData] = useState({
@@ -45,16 +46,16 @@ const [benefits, setBenefits] = useState([]);
     }));
   };
   return (
-     <div className="zipcode-container">
+     <div className="flex flex-col items-center justify-center h-screen min-h-screen p-4">
       {!formData.showForm ? (
         <>
-          <h1 className="welcome-title">Welcome to Job</h1>
-          <p className="zipcode-subtext">
+          <h1 className="text-4xl font-bold text-[#5664f5] mb-2">Welcome to Job</h1>
+          <p className="text-gray-700 max-w-lg mb-4 leading-normal">
             Understand how taking a new job can affect your government benefits.
             Enter your ZIP code to get started.
           </p>
 
-          <div className="zipcode-form">
+          <div className="flex justify-center items-center align-center gap-2 w-full max-w-sm">
             <input
               type="text"
               placeholder="Enter ZIP Code"
@@ -62,40 +63,61 @@ const [benefits, setBenefits] = useState([]);
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, zip: e.target.value })) // Update ZIP in state
               }
-              className="zipcode-input"
-            />
-            <button onClick={handleContinue} className="zipcode-button">
-              Continue
-            </button>
+              className="
+                text-base flex-1 p-2
+                rounded-md border-[#5664f5]
+                border-solid border focus:border-purple-500
+                focus:outline-none
+                focus:text-[#5664f5]"
+              />
+              <button onClick={handleContinue} className="bg-[#5664f5] text-white
+                border-none rounded-md
+                py-2 px-4 text-base font-semibold cursor-pointer
+                hover:bg-purple-600 focus:outline-none "
+                >
+                Continue
+              </button>
           </div>
         </>
       ) : (
         <>
-          <h2 className="zipcode-title">Select Benefits</h2>
-          <ul className="benefits-list">
+          <h2 className="text-5xl font-bold text-black mb-2 flex flex-col">Select Benefits</h2>
+          <ul className=" text-[#5664f5] px-4 w-72 ">
             {benefits.map((benefit) => (
-              <li key={benefit.id} className="benefit-item">
-                <label>
+              <li key={benefit.id} className="w-full">
+                <label className="flex items-center space-x-4 mb-2 cursor-pointer">
                   <input
                     type="checkbox"
+                    className=''
                     checked={formData.selectedBenefits.includes(benefit.id)}
                     onChange={() => toggleBenefit(benefit.id)}
                   />
-                  <span className="benefit-icon">{benefit.icon} </span>
-                  <span className="benefit-name">{benefit.name} </span>
-                  <span className="benefit-amount">
+                  <span className="text-[#5664f5] text-2xl"><Iconz name={benefit.icon} /></span>
+                  <span className="text-black">{benefit.name} </span>
+                  <input
+                    type="text"
+                    placeholder={`$${benefit.amount}`}
+                    className='bg-white text-[#5664f5] border border-solid
+                      border-[#5664f5] rounded-lg py-0 px-2 w-full'
+                  />
+                  {/* <span className="benefit-amount">
                     ${benefit.amount} / {benefit.unit}
-                  </span>
+                  </span> */}
                 </label>
               </li>
             ))}
           </ul>
 
-          <h2 className="zipcode-title">Job Details</h2>
-          <div className="job-form">
+          <h2 className="text-5xl font-bold text-black mb-2 flex flex-col mt-4">Job Details</h2>
+          <div className="flex flex-col items-center align-center gap-2 w-full max-w-sm">
             <label>
               Employment
-              <select className="job-form-select"
+              <select className="text-[13px] text-[#5664f5] mx-3 py-0 px-2
+                  border border-solid bg-white
+                  rounded-lg border-[#5664f5]
+                  font-lexendDeca leading-[35.333335876464844px]
+                  focus:outline-none 
+                  focus:text-purple-800 cursor-pointer"
                 value={formData.jobDetails.employment}
                 onChange={(e) =>
                   handleJobChange("employment ", e.target.value)
@@ -109,7 +131,12 @@ const [benefits, setBenefits] = useState([]);
 
             <label>
               Hours per Week  
-              <select className="job-form-select"
+              <select className="text-[13px] text-[#5664f5] mx-3 py-0 px-2
+                  border border-solid bg-white
+                  rounded-lg border-[#5664f5]
+                  font-lexendDeca leading-[35.333335876464844px]
+                  focus:outline-none 
+                  focus:text-purple-800 cursor-pointer"
                 value={ formData.jobDetails.hours}
                 onChange={(e) =>
                   handleJobChange("hours", Number(e.target.value))
@@ -125,7 +152,12 @@ const [benefits, setBenefits] = useState([]);
 
             <label>
               Pay Type
-              <select className="job-form-select"
+              <select className="text-[13px] text-[#5664f5] mx-3 py-0 px-2
+                  border border-solid bg-white
+                  rounded-lg border-[#5664f5]
+                  font-lexendDeca leading-[35.333335876464844px]
+                  focus:outline-none 
+                  focus:text-purple-800 cursor-pointer"
                 value={formData.jobDetails.payType}
                 onChange={(e) => handleJobChange("payType", e.target.value)}
               >
@@ -136,7 +168,12 @@ const [benefits, setBenefits] = useState([]);
 
             <label>
               Pay Rate
-              <select className="job-form-select"
+              <select className="text-[13px] text-[#5664f5] mx-3 py-0 px-2
+                  border border-solid bg-white
+                  rounded-lg border-[#5664f5]
+                  font-lexendDeca leading-[35.333335876464844px]
+                  focus:outline-none 
+                  focus:text-purple-800 cursor-pointer"
                 value={formData.jobDetails.payRate}
                 onChange={(e) => handleJobChange("payRate", e.target.value)}
               >
@@ -148,7 +185,10 @@ const [benefits, setBenefits] = useState([]);
           </div>
 
           <button
-            className="zipcode-button"
+            className="bg-[#5664f5] text-white
+                border-none rounded-md
+                py-2 px-4 mt-4 text-base font-semibold cursor-pointer
+                hover:bg-purple-600 focus:outline-none "
             onClick={() => console.log(formData)}
           >
             Continue
