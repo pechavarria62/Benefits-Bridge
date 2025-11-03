@@ -23,9 +23,16 @@ const [benefits, setBenefits] = useState([]);
 
   // Called when the user clicks "Continue" after entering ZIP
   const handleContinue = () => {
-    if (formData.zip.trim()) {
+    const zip = formData.zip.trim(); 
+    //Zip has to be integers and 5 digitsonly
+    const CorrectZip = /^\d{5}$/.test(zip);
+
+    if (CorrectZip) {
       setFormData((prev) => ({ ...prev, showForm: true }));
+    } else {
+      alert("Zip code has to be numbers and 5 digits only please.");
     }
+
   };
 
   // Toggle a benefit on/off in selectedBenefits
@@ -61,7 +68,7 @@ const [benefits, setBenefits] = useState([]);
               placeholder="Enter ZIP Code"
               value={formData.zip}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, zip: e.target.value })) // Update ZIP in state
+                setFormData((prev) => ({ ...prev, zip: e.target.value }))
               }
               className="
                 text-base flex-1 p-2
