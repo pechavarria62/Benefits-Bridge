@@ -1,18 +1,48 @@
+
 # Benefits-Bridge
 
+[![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black&style=plastic)](https://react.dev/)
+ [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white&style=plastic)](https://vitejs.dev/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Submitted by: The Bridge Ministry
 
-Currently, two official plugins are available:
+Project Lead: [Pedro Echavarria](www.linkedin.com/in/pedro-echavarria1) (CIT Columbus)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Many people experiencing homelessness want to work but fear losing essential benefits like food assistance, healthcare, or housing. Without clarity, it’s hard to say “yes” to work with confidence.
+The solution was to create a simple, mobile-first web app that shows how taking a job changes benefits and total resources over the next year. Usable on a shelter tablet, library computer, or a phone with low data.
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+You will need the following software installed on your computer, you can click on the names to be directed to their websites:
 
-## Expanding the ESLint configuration
+- [Node.js](https://nodejs.org/en) (version 16 or higher is recommended)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (Node Package Manager, which comes bundled with Node.js) or Yarn
+
+## Clone the Repository
+First, clone the project from GitHub to your local machine using the following command:
+- git clone https://github.com/pechavarria62/Benefits-Bridge.git
+
+## Install Dependencies
+Change your current directory to the newly cloned project folder:
+- npm install or yarn install
+
+## Run the Development Server
+Start the local development server. This will compile the React application and open it in your default web browser (usually at http://localhost:5173/ or a similar port).
+- npm run dev or yarn dev.
+
+The application should now be running! Any changes you make to the source files will trigger a hot reload in the browser.
+#
+### Contributing
+We welcome contributions! If you're interested in helping develop Benefits-Bridge, please:
+
+1. Fork the repository on GitHub.
+
+2. Clone your forked repository.
+
+3. Create a new branch for your feature or fix.
+
+4. Make your changes and commit them.
+
+5. Push your branch and open a Pull Request to the main repository.
 
