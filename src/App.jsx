@@ -4,9 +4,10 @@ import {
   Route,
   Routes,
   Navigate,
-} from 'react-router-dom'
-import ZipCode from './pages/ZipCode'
-import './App.css'
+} from "react-router-dom";
+import ZipCode from "./pages/ZipCode";
+import Results from "./pages/Results";
+import "./App.css";
 
 function App() {
   return (
@@ -14,10 +15,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<ZipCode />} />
-        {/* <Route path="/results" element={<Results />} />0 */}
+        <Route path="/results" element={<Results />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

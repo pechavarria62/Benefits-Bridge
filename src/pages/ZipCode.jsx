@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import benefitsData from "../lib/benefits.json";
 import Iconz from "../components/IconMapper";
 
 function ZipCode() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     zip: "",
     showForm: false,
@@ -12,19 +14,17 @@ function ZipCode() {
       hours: 40,
       payType: "Hourly ",
       payRate: "Weekly ",
+      hourlyWage: "",
     },
   });
   const [benefits, setBenefits] = useState([]);
 
-  // Load benefits data when component mounts
   useEffect(() => {
     setBenefits(benefitsData.benefits);
   }, []);
 
-  // Called when the user clicks "Continue" after entering ZIP
   const handleContinue = () => {
     const zip = formData.zip.trim();
-    //Zip has to be integers and 5 digitsonly
     const CorrectZip = /^\d{5}$/.test(zip);
 
     if (CorrectZip) {
@@ -34,7 +34,34 @@ function ZipCode() {
     }
   };
 
-  // Toggle a benefit on/off in selectedBenefits
+  const handleZipKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleContinue();
+    }
+  };
+
+  const handleFormKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleFormSubmit();
+    }
+  };
+
+  const handleFormSubmit = () => {
+    if (formData.selectedBenefits.length === 0) {
+      alert("Please select at least one benefit to continue.");
+      return;
+    }
+    if (!formData.jobDetails.hourlyWage) {
+      alert("Please enter your hourly wage to continue.");
+      return;
+    }
+    navigate("/results", {
+      state: {
+        formData,
+      },
+    });
+  };
+
   const toggleBenefit = (id) => {
     setFormData((prev) => ({
       ...prev,
@@ -44,7 +71,6 @@ function ZipCode() {
     }));
   };
 
-  // Update jobDetails fields when user changes inputs
   const handleJobChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -71,6 +97,7 @@ function ZipCode() {
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, zip: e.target.value }))
               }
+              onKeyDown={handleZipKeyPress}
               className="
                 text-base flex-1 p-2
                 rounded-md border-[#5664f5]
@@ -114,9 +141,6 @@ function ZipCode() {
                     className="bg-white text-[#5664f5] border border-solid
                       border-[#5664f5] rounded-lg py-0 px-2 w-full"
                   />
-                  {/* <span className="benefit-amount">
-                    ${benefit.amount} / {benefit.unit}
-                  </span> */}
                 </label>
               </li>
             ))}
@@ -201,6 +225,25 @@ function ZipCode() {
                   <option>Monthly</option>
                 </select>
               </label>
+              <label>
+                Hourly Wage ($)
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  placeholder="15.00"
+                  className="text-[13px] text-[#5664f5] mx-3 py-2 px-2
+                  border border-solid bg-white
+                  rounded-lg border-[#5664f5]
+                  focus:outline-none 
+                  focus:text-purple-800 w-full"
+                  value={formData.jobDetails.hourlyWage}
+                  onChange={(e) =>
+                    handleJobChange("hourlyWage", e.target.value)
+                  }
+                  onKeyDown={handleFormKeyPress}
+                />
+              </label>
             </div>
           </div>
 
@@ -209,7 +252,7 @@ function ZipCode() {
                 border-none rounded-md
                 py-2 px-4 mt-4 text-base font-semibold cursor-pointer
                 hover:bg-purple-600 focus:outline-none "
-            onClick={() => console.log(formData)}
+            onClick={handleFormSubmit}
           >
             Continue
           </button>
