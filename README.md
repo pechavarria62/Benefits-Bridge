@@ -36,11 +36,11 @@ The application should now be running! Any changes you make to the source files 
 ### Contributing
 We welcome contributions! If you're interested in helping develop Benefits-Bridge, please:
 
-1. Fork the repository on GitHub.
+1. Clone the repository on GitHub.
 
-2. Clone your forked repository.
+2. input "git checkout develop"
 
-3. Create a new branch for your feature or fix.
+3. Create a new branch for your feature or fix using "git branch [branch-name]".
 
 4. Make your changes and commit them.
 
