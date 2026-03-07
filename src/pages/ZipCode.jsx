@@ -124,22 +124,22 @@ function ZipCode() {
           <ul className=" text-[#5664f5] px-2 w-72 ">
             {benefits.map((benefit) => (
               <li key={benefit.id} className="w-full">
-                <label className="flex items-center space-x-4 mb-2 cursor-pointer">
+                <label className="flex items-center gap-4 mb-2 cursor-pointer">
                   <input
                     type="checkbox"
-                    className=""
+                    className="flex-shrink-0"
                     checked={formData.selectedBenefits.includes(benefit.id)}
                     onChange={() => toggleBenefit(benefit.id)}
                   />
-                  <span className="text-[#5664f5] text-2xl">
+                  <span className="flex-shrink-0 text-[#5664f5] text-2xl">
                     <Iconz name={benefit.icon} />
                   </span>
-                  <span className="text-black">{benefit.name} </span>
+                  <span className="text-black flex-shrink-0 w-20">{benefit.name} </span>
                   <input
                     type="text"
                     placeholder={`$${benefit.amount}`}
                     className="bg-white text-[#5664f5] border border-solid
-                      border-[#5664f5] rounded-lg py-0 px-2 w-full"
+                      border-[#5664f5] rounded-lg py-0 px-2 w-24"
                   />
                 </label>
               </li>

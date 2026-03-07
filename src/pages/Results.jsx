@@ -11,29 +11,23 @@ function Results() {
   const location = useLocation();
   const navigate = useNavigate();
   const [results, setResults] = useState(null);
-  const [benefitsMap, setBenefitsMap] = useState({});
+  const [, setBenefitsMap] = useState({});
 
   useEffect(() => {
-    // Create benefits map for easy lookup
     const map = {};
     benefitsData.benefits.forEach((benefit) => {
       map[benefit.id] = benefit;
     });
     setBenefitsMap(map);
 
-    // Get form data from navigation state
     const formData = location.state?.formData;
 
     if (!formData || !formData.selectedBenefits.length) {
-      // Redirect back if no data
       navigate("/dashboard");
       return;
     }
 
-    // Calculate monthly income from job details
-    // Get hourly rate from formData
-    const hourlyRate = parseFloat(formData.jobDetails.hourlyWage) || 15; // Default $15/hour if not specified
-
+    const hourlyRate = parseFloat(formData.jobDetails.hourlyWage) || 15;
     const monthlyIncome = calculateMonthlyIncome(
       formData.jobDetails.payType.trim(),
       formData.jobDetails.hours,
@@ -41,7 +35,6 @@ function Results() {
       hourlyRate,
     );
 
-    // Calculate benefit status
     const calculationResults = calculateBenefitStatus(
       formData.selectedBenefits,
       map,
@@ -65,21 +58,21 @@ function Results() {
         type: "sufficient",
         message: "Great news! Your job income exceeds your benefits.",
         description:
-          "You'll be earning more than your current benefits provide.",
+          "You could be earning more than your current benefits provide.",
       };
     } else if (results.totalBenefitsWithJob === 0) {
       return {
         type: "lost",
-        message: "All benefits would be lost.",
+        message: "All benefits may be lost.",
         description:
           "Your income is too high to qualify for benefits. Consider the trade-off carefully.",
       };
     } else {
       return {
         type: "partial",
-        message: "You can keep some of your benefits.",
+        message: "You may keep some of your benefits.",
         description:
-          "Your income allows you to keep or partially receive some benefits.",
+          "Your income may allows you to keep or partially receive some benefits.",
       };
     }
   };
@@ -194,7 +187,7 @@ function Results() {
         {results.benefitsKept.length > 0 && (
           <div className="mb-8">
             <h3 className="text-xl font-bold text-green-700 mb-4">
-              ✓ Benefits You Can Keep
+              ✓ Benefits You may Keep
             </h3>
             <div className="space-y-3">
               {results.benefitsKept.map((benefit) => (
@@ -226,7 +219,7 @@ function Results() {
         {results.benefitsLost.length > 0 && (
           <div className="mb-8">
             <h3 className="text-xl font-bold text-red-700 mb-4">
-              ✕ Benefits You Would Lose
+              ✕ Benefits You may Lose
             </h3>
             <div className="space-y-3">
               {results.benefitsLost.map((benefit) => (
