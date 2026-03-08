@@ -284,7 +284,7 @@ function Results() {
             className="px-6 py-3 bg-gray-300 text-gray-800 font-semibold rounded-md
               hover:bg-gray-400 cursor-pointer"
           >
-            Edit Answers
+            Home
           </button>
           <button
             className="px-6 py-3 bg-[#5664f5] text-white font-semibold rounded-md
