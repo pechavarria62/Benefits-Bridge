@@ -9,11 +9,12 @@ function ZipCode() {
     zip: "",
     showForm: false,
     selectedBenefits: [],
+    benefitAmounts: {}, // Track custom benefit amounts
     jobDetails: {
-      employment: "Full-time ",
+      employment: "Full-time",
       hours: 40,
-      payType: "Hourly ",
-      payRate: "Weekly ",
+      payType: "Hourly",
+      payRate: "Weekly",
       hourlyWage: "",
     },
   });
@@ -83,6 +84,13 @@ function ZipCode() {
       jobDetails: { ...prev.jobDetails, [field]: value },
     }));
   };
+
+  const handleBenefitAmountChange = (benefitId, amount) => {
+    setFormData((prev) => ({
+      ...prev,
+      benefitAmounts: { ...prev.benefitAmounts, [benefitId]: amount },
+    }));
+  };
   return (
     <div className="flex flex-col items-center justify-center h-screen min-h-screen p-4">
       {!formData.showForm ? (
@@ -140,10 +148,18 @@ function ZipCode() {
                   <span className="flex-shrink-0 text-[#5664f5] text-2xl">
                     <Iconz name={benefit.icon} />
                   </span>
-                  <span className="text-black flex-shrink-0 w-20">{benefit.name} </span>
+                  <span className="text-black flex-shrink-0 w-20">
+                    {benefit.name}{" "}
+                  </span>
                   <input
-                    type="text"
+                    type="number"
+                    step="0.01"
+                    min="0"
                     placeholder={`$${benefit.amount}`}
+                    value={formData.benefitAmounts[benefit.id] || ""}
+                    onChange={(e) =>
+                      handleBenefitAmountChange(benefit.id, e.target.value)
+                    }
                     className="bg-white text-[#5664f5] border border-solid
                       border-[#5664f5] rounded-lg py-0 px-2 w-24"
                   />
@@ -168,7 +184,7 @@ function ZipCode() {
                   focus:text-purple-800 cursor-pointer"
                   value={formData.jobDetails.employment}
                   onChange={(e) =>
-                    handleJobChange("employment ", e.target.value)
+                    handleJobChange("employment", e.target.value)
                   }
                 >
                   <option>Full-time</option>

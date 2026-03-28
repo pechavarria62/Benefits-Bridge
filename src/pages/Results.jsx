@@ -43,6 +43,7 @@ function Results() {
       formData.selectedBenefits,
       map,
       monthlyIncome,
+      formData.benefitAmounts || {},
     );
 
     setResults(calculationResults);
@@ -69,7 +70,7 @@ function Results() {
         type: "lost",
         message: "All benefits may be lost.",
         description:
-          "Your income is too high to qualify for benefits. Consider the trade-off carefully.",
+          "Your income may be too high to qualify for benefits. Consider the trade-off carefully.",
       };
     } else {
       return {
@@ -276,6 +277,12 @@ function Results() {
               <span className="text-gray-600">Pay Frequency:</span>
               <p className="font-semibold text-gray-800">
                 {location.state?.formData.jobDetails.payRate.trim()}
+              </p>
+            </div>
+            <div>
+              <span className="text-gray-600">Hourly Wage:</span>
+              <p className="font-semibold text-gray-800">
+                ${location.state?.formData.jobDetails.hourlyWage}
               </p>
             </div>
           </div>

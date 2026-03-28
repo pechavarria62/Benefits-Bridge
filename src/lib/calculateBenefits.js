@@ -46,12 +46,14 @@ export const calculateMonthlyIncome = (
  * @param {Array} selectedBenefits - Array of benefit IDs selected
  * @param {Object} benefitsMap - Map of benefit ID to benefit data
  * @param {number} monthlyIncome - Monthly job income
+ * @param {Object} customAmounts - Custom benefit amounts entered by user (optional)
  * @returns {Object} Calculation results
  */
 export const calculateBenefitStatus = (
   selectedBenefits,
   benefitsMap,
   monthlyIncome,
+  customAmounts = {},
 ) => {
   const results = {
     monthlyIncome,
@@ -73,7 +75,19 @@ export const calculateBenefitStatus = (
     const benefit = benefitsMap[benefitId];
     if (!benefit) return;
 
-    const monthlyBenefit = benefit.amount;
+    // Use custom amount if provided, otherwise use default from benefits.json
+    let monthlyBenefit = benefit.amount; // Default to benefit.amount
+
+    if (
+      customAmounts &&
+      customAmounts[benefitId] &&
+      customAmounts[benefitId] !== ""
+    ) {
+      const customAmount = parseFloat(customAmounts[benefitId]);
+      if (!isNaN(customAmount) && customAmount >= 0) {
+        monthlyBenefit = customAmount;
+      }
+    }
     results.totalBenefitsWithoutJob += monthlyBenefit;
     results.selectedBenefits.push(benefit);
 
