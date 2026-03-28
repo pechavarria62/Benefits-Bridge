@@ -23,6 +23,12 @@ function ZipCode() {
     setBenefits(benefitsData.benefits);
   }, []);
 
+  useEffect(() => {
+    document.title = formData.showForm
+      ? "Benefits Bridge - Select Benefits"
+      : "Benefits Bridge - Welcome";
+  }, [formData.showForm]);
+
   const handleContinue = () => {
     const zip = formData.zip.trim();
     const CorrectZip = /^\d{5}$/.test(zip);

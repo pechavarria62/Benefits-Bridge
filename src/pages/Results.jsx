@@ -14,6 +14,10 @@ function Results() {
   const [, setBenefitsMap] = useState({});
 
   useEffect(() => {
+    document.title = "Benefits Bridge - Your Results";
+  }, []);
+
+  useEffect(() => {
     const map = {};
     benefitsData.benefits.forEach((benefit) => {
       map[benefit.id] = benefit;
