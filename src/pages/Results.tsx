@@ -306,6 +306,13 @@ function Results() {
           </button>
           <button
             type="button"
+            onClick={() => {
+              void import("../lib/exportResultsPdf").then(
+                ({ exportResultsToPdf }) => {
+                  exportResultsToPdf(formData, results, scenario);
+                },
+              );
+            }}
             className="px-6 py-3 bg-[#5664f5] text-white font-semibold rounded-md
               hover:bg-purple-600 cursor-pointer"
           >
