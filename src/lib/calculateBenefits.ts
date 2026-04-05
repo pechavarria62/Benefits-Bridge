@@ -1,3 +1,35 @@
+import type { Benefit } from "../types/app";
+
+export interface BenefitKept extends Benefit {
+  originalAmount: number;
+  reducedAmount: number;
+}
+
+export interface BenefitLost extends Benefit {
+  originalAmount: number;
+}
+
+export interface YearSummary {
+  benefitsOnlyAnnual: number;
+  jobOnlyAnnual: number;
+  jobPlusBenefitsAnnual: number;
+  yearlyIncrease: number;
+}
+
+export interface CalculationResults {
+  monthlyIncome: number;
+  selectedBenefits: Benefit[];
+  totalBenefitsWithoutJob: number;
+  totalBenefitsWithJob: number;
+  totalResourcesWithoutJob: number;
+  totalResourcesWithJob: number;
+  benefitsLost: BenefitLost[];
+  benefitsKept: BenefitKept[];
+  yearSummary: YearSummary;
+}
+
+type BenefitsMap = Record<string, Benefit | undefined>;
+
 /**
  * Calculate monthly income from job based on hours, pay type, and frequency
  * @param {string} payType - "Hourly" or "Salary"
@@ -7,11 +39,11 @@
  * @returns {number} Monthly income in dollars
  */
 export const calculateMonthlyIncome = (
-  payType,
-  hours,
-  payFrequency,
-  hourlyRate,
-) => {
+  payType: string,
+  hours: number,
+  payFrequency: string,
+  hourlyRate: number,
+): number => {
   if (!hourlyRate || hourlyRate <= 0) return 0;
 
   let weeklyIncome = 0;
@@ -50,12 +82,12 @@ export const calculateMonthlyIncome = (
  * @returns {Object} Calculation results
  */
 export const calculateBenefitStatus = (
-  selectedBenefits,
-  benefitsMap,
-  monthlyIncome,
-  customAmounts = {},
-) => {
-  const results = {
+  selectedBenefits: string[],
+  benefitsMap: BenefitsMap,
+  monthlyIncome: number,
+  customAmounts: Record<string, string> = {},
+): CalculationResults => {
+  const results: CalculationResults = {
     monthlyIncome,
     selectedBenefits: [],
     totalBenefitsWithoutJob: 0,
@@ -64,7 +96,12 @@ export const calculateBenefitStatus = (
     totalResourcesWithJob: 0,
     benefitsLost: [],
     benefitsKept: [],
-    yearSummary: null,
+    yearSummary: {
+      benefitsOnlyAnnual: 0,
+      jobOnlyAnnual: 0,
+      jobPlusBenefitsAnnual: 0,
+      yearlyIncrease: 0,
+    },
   };
 
   // Standard benefit phase-out thresholds
@@ -78,13 +115,10 @@ export const calculateBenefitStatus = (
     // Use custom amount if provided, otherwise use default from benefits.json
     let monthlyBenefit = benefit.amount; // Default to benefit.amount
 
-    if (
-      customAmounts &&
-      customAmounts[benefitId] &&
-      customAmounts[benefitId] !== ""
-    ) {
-      const customAmount = parseFloat(customAmounts[benefitId]);
-      if (!isNaN(customAmount) && customAmount >= 0) {
+    const rawCustom = customAmounts[benefitId];
+    if (rawCustom !== undefined && rawCustom !== "") {
+      const customAmount = parseFloat(rawCustom);
+      if (!Number.isNaN(customAmount) && customAmount >= 0) {
         monthlyBenefit = customAmount;
       }
     }

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import type { KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import benefitsData from "../lib/benefits.json";
-import Iconz from "../components/IconMapper";
+import type { Benefit, DashboardFormData } from "../types/app";
+import IconMapper from "../components/IconMapper";
 
 function ZipCode() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<DashboardFormData>({
     zip: "",
     showForm: false,
     selectedBenefits: [],
@@ -18,7 +20,7 @@ function ZipCode() {
       hourlyWage: "",
     },
   });
-  const [benefits, setBenefits] = useState([]);
+  const [benefits, setBenefits] = useState<Benefit[]>([]);
 
   useEffect(() => {
     setBenefits(benefitsData.benefits);
@@ -32,22 +34,22 @@ function ZipCode() {
 
   const handleContinue = () => {
     const zip = formData.zip.trim();
-    const CorrectZip = /^\d{5}$/.test(zip);
+    const correctZip = /^\d{5}$/.test(zip);
 
-    if (CorrectZip) {
+    if (correctZip) {
       setFormData((prev) => ({ ...prev, showForm: true }));
     } else {
       alert("Zip code has to be numbers and 5 digits only please.");
     }
   };
 
-  const handleZipKeyPress = (e) => {
+  const handleZipKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleContinue();
     }
   };
 
-  const handleFormKeyPress = (e) => {
+  const handleFormKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleFormSubmit();
     }
@@ -69,7 +71,7 @@ function ZipCode() {
     });
   };
 
-  const toggleBenefit = (id) => {
+  const toggleBenefit = (id: string) => {
     setFormData((prev) => ({
       ...prev,
       selectedBenefits: prev.selectedBenefits.includes(id)
@@ -78,14 +80,17 @@ function ZipCode() {
     }));
   };
 
-  const handleJobChange = (field, value) => {
+  const handleJobChange = <K extends keyof DashboardFormData["jobDetails"]>(
+    field: K,
+    value: DashboardFormData["jobDetails"][K],
+  ) => {
     setFormData((prev) => ({
       ...prev,
       jobDetails: { ...prev.jobDetails, [field]: value },
     }));
   };
 
-  const handleBenefitAmountChange = (benefitId, amount) => {
+  const handleBenefitAmountChange = (benefitId: string, amount: string) => {
     setFormData((prev) => ({
       ...prev,
       benefitAmounts: { ...prev.benefitAmounts, [benefitId]: amount },
@@ -120,6 +125,7 @@ function ZipCode() {
                 focus:text-[#5664f5]"
             />
             <button
+              type="button"
               onClick={handleContinue}
               className="bg-[#5664f5] text-white
                 border-none rounded-md
@@ -146,7 +152,7 @@ function ZipCode() {
                     onChange={() => toggleBenefit(benefit.id)}
                   />
                   <span className="flex-shrink-0 text-[#5664f5] text-2xl">
-                    <Iconz name={benefit.icon} />
+                    <IconMapper name={benefit.icon} />
                   </span>
                   <span className="text-black flex-shrink-0 w-20">
                     {benefit.name}{" "}
@@ -156,7 +162,7 @@ function ZipCode() {
                     step="0.01"
                     min="0"
                     placeholder={`$${benefit.amount}`}
-                    value={formData.benefitAmounts[benefit.id] || ""}
+                    value={formData.benefitAmounts[benefit.id] ?? ""}
                     onChange={(e) =>
                       handleBenefitAmountChange(benefit.id, e.target.value)
                     }
@@ -180,7 +186,7 @@ function ZipCode() {
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   font-lexendDeca leading-[35.333335876464844px]
-                  focus:outline-none 
+                  focus:outline-none
                   focus:text-purple-800 cursor-pointer"
                   value={formData.jobDetails.employment}
                   onChange={(e) =>
@@ -199,7 +205,7 @@ function ZipCode() {
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   font-lexendDeca leading-[35.333335876464844px]
-                  focus:outline-none 
+                  focus:outline-none
                   focus:text-purple-800 cursor-pointer"
                   value={formData.jobDetails.hours}
                   onChange={(e) =>
@@ -220,7 +226,7 @@ function ZipCode() {
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   font-lexendDeca leading-[35.333335876464844px]
-                  focus:outline-none 
+                  focus:outline-none
                   focus:text-purple-800 cursor-pointer"
                   value={formData.jobDetails.payType}
                   onChange={(e) => handleJobChange("payType", e.target.value)}
@@ -237,7 +243,7 @@ function ZipCode() {
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   font-lexendDeca leading-[35.333335876464844px]
-                  focus:outline-none 
+                  focus:outline-none
                   focus:text-purple-800 cursor-pointer"
                   value={formData.jobDetails.payRate}
                   onChange={(e) => handleJobChange("payRate", e.target.value)}
@@ -257,7 +263,7 @@ function ZipCode() {
                   className="text-[13px] text-[#5664f5] mx-3 py-2 px-2
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
-                  focus:outline-none 
+                  focus:outline-none
                   focus:text-purple-800 w-full"
                   value={formData.jobDetails.hourlyWage}
                   onChange={(e) =>
@@ -270,6 +276,7 @@ function ZipCode() {
           </div>
 
           <button
+            type="button"
             className="bg-[#5664f5] text-white
                 border-none rounded-md
                 py-2 px-4 mt-4 text-base font-semibold cursor-pointer

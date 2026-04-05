@@ -1,32 +1,48 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import benefitsData from "../lib/benefits.json";
 import {
   calculateMonthlyIncome,
   calculateBenefitStatus,
+  type CalculationResults,
 } from "../lib/calculateBenefits";
-import Iconz from "../components/IconMapper";
+import type { Benefit, ResultsLocationState } from "../types/app";
+import IconMapper from "../components/IconMapper";
+
+function isResultsState(s: unknown): s is ResultsLocationState {
+  if (s === null || typeof s !== "object") return false;
+  const fd = (s as { formData?: unknown }).formData;
+  if (fd === null || typeof fd !== "object") return false;
+  const sel = (fd as { selectedBenefits?: unknown }).selectedBenefits;
+  return Array.isArray(sel);
+}
 
 function Results() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [results, setResults] = useState(null);
-  const [, setBenefitsMap] = useState({});
+  const [results, setResults] = useState<CalculationResults | null>(null);
+  const [, setBenefitsMap] = useState<Record<string, Benefit>>({});
 
   useEffect(() => {
     document.title = "Benefits Bridge - Your Results";
   }, []);
 
   useEffect(() => {
-    const map = {};
+    const map: Record<string, Benefit> = {};
     benefitsData.benefits.forEach((benefit) => {
       map[benefit.id] = benefit;
     });
     setBenefitsMap(map);
 
-    const formData = location.state?.formData;
+    const state = location.state;
+    if (!isResultsState(state)) {
+      navigate("/dashboard");
+      return;
+    }
 
-    if (!formData || !formData.selectedBenefits.length) {
+    const { formData } = state;
+
+    if (!formData.selectedBenefits.length) {
       navigate("/dashboard");
       return;
     }
@@ -43,7 +59,7 @@ function Results() {
       formData.selectedBenefits,
       map,
       monthlyIncome,
-      formData.benefitAmounts || {},
+      formData.benefitAmounts ?? {},
     );
 
     setResults(calculationResults);
@@ -57,29 +73,32 @@ function Results() {
     );
   }
 
+  const state = location.state;
+  const formData = isResultsState(state) ? state.formData : null;
+
   const determineScenario = () => {
     if (results.monthlyIncome >= results.totalBenefitsWithoutJob) {
       return {
-        type: "sufficient",
+        type: "sufficient" as const,
         message: "Great news! Your job income exceeds your benefits.",
         description:
           "You could be earning more than your current benefits provide.",
       };
-    } else if (results.totalBenefitsWithJob === 0) {
+    }
+    if (results.totalBenefitsWithJob === 0) {
       return {
-        type: "lost",
+        type: "lost" as const,
         message: "All benefits may be lost.",
         description:
           "Your income may be too high to qualify for benefits. Consider the trade-off carefully.",
       };
-    } else {
-      return {
-        type: "partial",
-        message: "You may keep some of your benefits.",
-        description:
-          "Your income may allows you to keep or partially receive some benefits.",
-      };
     }
+    return {
+      type: "partial" as const,
+      message: "You may keep some of your benefits.",
+      description:
+        "Your income may allows you to keep or partially receive some benefits.",
+    };
   };
 
   const scenario = determineScenario();
@@ -93,7 +112,7 @@ function Results() {
         </h1>
         <p className="text-gray-600 text-center mb-8">
           ZIP Code:{" "}
-          <span className="font-semibold">{location.state?.formData.zip}</span>
+          <span className="font-semibold">{formData?.zip}</span>
         </p>
 
         {/* Scenario Card */}
@@ -202,7 +221,7 @@ function Results() {
                 >
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-2xl text-green-600">
-                      <Iconz name={benefit.icon} />
+                      <IconMapper name={benefit.icon} />
                     </span>
                     <h4 className="font-bold text-gray-800">{benefit.name}</h4>
                   </div>
@@ -234,7 +253,7 @@ function Results() {
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-2xl text-red-600">
-                      <Iconz name={benefit.icon} />
+                      <IconMapper name={benefit.icon} />
                     </span>
                     <div className="flex-1">
                       <h4 className="font-bold text-gray-800">
@@ -252,45 +271,48 @@ function Results() {
         )}
 
         {/* Job Details Summary */}
-        <div className="bg-gray-100 p-6 rounded-lg mb-8">
-          <h3 className="font-bold text-gray-800 mb-3">Your Job Details</h3>
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            <div>
-              <span className="text-gray-600">Type:</span>
-              <p className="font-semibold text-gray-800">
-                {location.state?.formData.jobDetails.employment.trim()}
-              </p>
-            </div>
-            <div>
-              <span className="text-gray-600">Hours/Week:</span>
-              <p className="font-semibold text-gray-800">
-                {location.state?.formData.jobDetails.hours}
-              </p>
-            </div>
-            <div>
-              <span className="text-gray-600">Pay Type:</span>
-              <p className="font-semibold text-gray-800">
-                {location.state?.formData.jobDetails.payType.trim()}
-              </p>
-            </div>
-            <div>
-              <span className="text-gray-600">Pay Frequency:</span>
-              <p className="font-semibold text-gray-800">
-                {location.state?.formData.jobDetails.payRate.trim()}
-              </p>
-            </div>
-            <div>
-              <span className="text-gray-600">Hourly Wage:</span>
-              <p className="font-semibold text-gray-800">
-                ${location.state?.formData.jobDetails.hourlyWage}
-              </p>
+        {formData && (
+          <div className="bg-gray-100 p-6 rounded-lg mb-8">
+            <h3 className="font-bold text-gray-800 mb-3">Your Job Details</h3>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <span className="text-gray-600">Type:</span>
+                <p className="font-semibold text-gray-800">
+                  {formData.jobDetails.employment.trim()}
+                </p>
+              </div>
+              <div>
+                <span className="text-gray-600">Hours/Week:</span>
+                <p className="font-semibold text-gray-800">
+                  {formData.jobDetails.hours}
+                </p>
+              </div>
+              <div>
+                <span className="text-gray-600">Pay Type:</span>
+                <p className="font-semibold text-gray-800">
+                  {formData.jobDetails.payType.trim()}
+                </p>
+              </div>
+              <div>
+                <span className="text-gray-600">Pay Frequency:</span>
+                <p className="font-semibold text-gray-800">
+                  {formData.jobDetails.payRate.trim()}
+                </p>
+              </div>
+              <div>
+                <span className="text-gray-600">Hourly Wage:</span>
+                <p className="font-semibold text-gray-800">
+                  ${formData.jobDetails.hourlyWage}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex gap-4 justify-center">
           <button
+            type="button"
             onClick={() => navigate("/dashboard")}
             className="px-6 py-3 bg-gray-300 text-gray-800 font-semibold rounded-md
               hover:bg-gray-400 cursor-pointer"
@@ -298,6 +320,7 @@ function Results() {
             Home
           </button>
           <button
+            type="button"
             className="px-6 py-3 bg-[#5664f5] text-white font-semibold rounded-md
               hover:bg-purple-600 cursor-pointer"
           >
