@@ -25,7 +25,3 @@ export interface DashboardFormData {
 export interface BenefitsJson {
   benefits: Benefit[];
 }
-
-export interface ResultsLocationState {
-  formData: DashboardFormData;
-}

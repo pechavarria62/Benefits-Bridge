@@ -1,25 +1,18 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import benefitsData from "../lib/benefits.json";
 import {
   calculateMonthlyIncome,
   calculateBenefitStatus,
   type CalculationResults,
 } from "../lib/calculateBenefits";
-import type { Benefit, ResultsLocationState } from "../types/app";
+import type { Benefit } from "../types/app";
 import IconMapper from "../components/IconMapper";
-
-function isResultsState(s: unknown): s is ResultsLocationState {
-  if (s === null || typeof s !== "object") return false;
-  const fd = (s as { formData?: unknown }).formData;
-  if (fd === null || typeof fd !== "object") return false;
-  const sel = (fd as { selectedBenefits?: unknown }).selectedBenefits;
-  return Array.isArray(sel);
-}
+import { useAppSelector } from "../store/hooks";
 
 function Results() {
-  const location = useLocation();
   const navigate = useNavigate();
+  const formData = useAppSelector((s) => s.form);
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [, setBenefitsMap] = useState<Record<string, Benefit>>({});
 
@@ -34,15 +27,12 @@ function Results() {
     });
     setBenefitsMap(map);
 
-    const state = location.state;
-    if (!isResultsState(state)) {
+    if (!formData.selectedBenefits.length) {
       navigate("/dashboard");
       return;
     }
 
-    const { formData } = state;
-
-    if (!formData.selectedBenefits.length) {
+    if (!formData.jobDetails.hourlyWage?.trim()) {
       navigate("/dashboard");
       return;
     }
@@ -63,7 +53,7 @@ function Results() {
     );
 
     setResults(calculationResults);
-  }, [location.state, navigate]);
+  }, [formData, navigate]);
 
   if (!results) {
     return (
@@ -72,9 +62,6 @@ function Results() {
       </div>
     );
   }
-
-  const state = location.state;
-  const formData = isResultsState(state) ? state.formData : null;
 
   const determineScenario = () => {
     if (results.monthlyIncome >= results.totalBenefitsWithoutJob) {
@@ -112,7 +99,7 @@ function Results() {
         </h1>
         <p className="text-gray-600 text-center mb-8">
           ZIP Code:{" "}
-          <span className="font-semibold">{formData?.zip}</span>
+          <span className="font-semibold">{formData.zip}</span>
         </p>
 
         {/* Scenario Card */}
@@ -271,43 +258,41 @@ function Results() {
         )}
 
         {/* Job Details Summary */}
-        {formData && (
-          <div className="bg-gray-100 p-6 rounded-lg mb-8">
-            <h3 className="font-bold text-gray-800 mb-3">Your Job Details</h3>
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div>
-                <span className="text-gray-600">Type:</span>
-                <p className="font-semibold text-gray-800">
-                  {formData.jobDetails.employment.trim()}
-                </p>
-              </div>
-              <div>
-                <span className="text-gray-600">Hours/Week:</span>
-                <p className="font-semibold text-gray-800">
-                  {formData.jobDetails.hours}
-                </p>
-              </div>
-              <div>
-                <span className="text-gray-600">Pay Type:</span>
-                <p className="font-semibold text-gray-800">
-                  {formData.jobDetails.payType.trim()}
-                </p>
-              </div>
-              <div>
-                <span className="text-gray-600">Pay Frequency:</span>
-                <p className="font-semibold text-gray-800">
-                  {formData.jobDetails.payRate.trim()}
-                </p>
-              </div>
-              <div>
-                <span className="text-gray-600">Hourly Wage:</span>
-                <p className="font-semibold text-gray-800">
-                  ${formData.jobDetails.hourlyWage}
-                </p>
-              </div>
+        <div className="bg-gray-100 p-6 rounded-lg mb-8">
+          <h3 className="font-bold text-gray-800 mb-3">Your Job Details</h3>
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <span className="text-gray-600">Type:</span>
+              <p className="font-semibold text-gray-800">
+                {formData.jobDetails.employment.trim()}
+              </p>
+            </div>
+            <div>
+              <span className="text-gray-600">Hours/Week:</span>
+              <p className="font-semibold text-gray-800">
+                {formData.jobDetails.hours}
+              </p>
+            </div>
+            <div>
+              <span className="text-gray-600">Pay Type:</span>
+              <p className="font-semibold text-gray-800">
+                {formData.jobDetails.payType.trim()}
+              </p>
+            </div>
+            <div>
+              <span className="text-gray-600">Pay Frequency:</span>
+              <p className="font-semibold text-gray-800">
+                {formData.jobDetails.payRate.trim()}
+              </p>
+            </div>
+            <div>
+              <span className="text-gray-600">Hourly Wage:</span>
+              <p className="font-semibold text-gray-800">
+                ${formData.jobDetails.hourlyWage}
+              </p>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Action Buttons */}
         <div className="flex gap-4 justify-center">
