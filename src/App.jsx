@@ -5,6 +5,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+// import CityState from "./pages/CityState";
 import ZipCode from "./pages/ZipCode";
 import Results from "./pages/Results";
 import "./App.css";
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<ZipCode />} />
+        {/* <Route path="/dashboard" element={<CityState />} /> */}
         <Route path="/results" element={<Results />} />
       </Routes>
     </Router>

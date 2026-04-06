@@ -2,31 +2,143 @@
   "benefits": [
     {
       "id": "snap",
-      "name": "SNAP",
-      "amount": 150,
+      "name": "SNAP (Food Assistance)",
+      "amount": 250,
       "unit": "month",
       "icon": "LiaUtensilsSolid"
     },
     {
       "id": "housing",
-      "name": "Housing",
+      "name": "Housing Assistance/Section 8",
       "unit": "month",
       "amount": 950,
       "icon": "LiaHomeSolid"
     },
     {
       "id": "medicaid",
-      "name": "Medicaid",
+      "name": "Medicaid (Healthcare)",
       "unit": "month",
-      "amount": 80,
+      "amount": 200,
       "icon": "LiaHeartbeatSolid"
     },
     {
       "id": "tanf",
-      "name": "TANF",
+      "name": "TANF (Cash Assistance)",
       "unit": "month",
-      "amount": 300,
+      "amount": 400,
       "icon": "LiaHandHoldingHeartSolid"
+    },
+    {
+      "id": "ssi",
+      "name": "SSI (Supplemental Security Income)",
+      "unit": "month",
+      "amount": 943,
+      "icon": "LiaUserTieSolid"
+    },
+    {
+      "id": "ssdi",
+      "name": "SSDI (Social Security Disability)",
+      "unit": "month",
+      "amount": 1350,
+      "icon": "LiaUserCheckSolid"
+    },
+    {
+      "id": "unemployment",
+      "name": "Unemployment Insurance",
+      "unit": "week",
+      "amount": 400,
+      "icon": "LiaBriefcaseSolid"
+    },
+    {
+      "id": "wic",
+      "name": "WIC (Women, Infants, Children)",
+      "unit": "month",
+      "amount": 150,
+      "icon": "LiaChildSolid"
+    },
+    {
+      "id": "liheap",
+      "name": "LIHEAP (Utility Assistance)",
+      "unit": "year",
+      "amount": 1200,
+      "icon": "LiaLightbulbSolid"
+    },
+    {
+      "id": "chip",
+      "name": "CHIP (Children's Health Insurance)",
+      "unit": "month",
+      "amount": 0,
+      "icon": "LiaHeartSolid"
+    },
+    {
+      "id": "childcare",
+      "name": "Child Care Assistance",
+      "unit": "month",
+      "amount": 600,
+      "icon": "LiaPlay Solid"
+    },
+    {
+      "id": "eitc",
+      "name": "EITC (Earned Income Tax Credit)",
+      "unit": "year",
+      "amount": 3600,
+      "icon": "LiaMoneyBillWaveSolid"
+    },
+    {
+      "id": "veterans",
+      "name": "Veterans Benefits (VA)",
+      "unit": "month",
+      "amount": 1000,
+      "icon": "LiaFlagUSASolid"
+    },
+    {
+      "id": "general_assistance",
+      "name": "General/Emergency Assistance",
+      "unit": "month",
+      "amount": 200,
+      "icon": "LiaHandshakeSolid"
+    },
+    {
+      "id": "food_pantry",
+      "name": "Food Pantry Services",
+      "unit": "month",
+      "amount": 100,
+      "icon": "LiaBoxOpenSolid"
+    },
+    {
+      "id": "cadc",
+      "name": "CADC (Case Management/Support)",
+      "unit": "month",
+      "amount": 0,
+      "icon": "LiaClipboardListSolid"
+    },
+    {
+      "id": "LIHEAP_emergency",
+      "name": "Emergency Housing Assistance",
+      "unit": "month",
+      "amount": 500,
+      "icon": "LiaExclamationCircleSolid"
+    },
+    {
+      "id": "transit",
+      "name": "Public Transit Assistance",
+      "unit": "month",
+      "amount": 50,
+      "icon": "LiaBusAltSolid"
+    },
+    {
+      "id": "phone",
+      "name": "Lifeline Phone Program",
+      "unit": "month",
+      "amount": 15,
+      "icon": "LiaPhoneSolid"
+    },
+    {
+      "id": "job_training",
+      "name": "Job Training/WIOA Programs",
+      "unit": "month",
+      "amount": 0,
+      "icon": "LiaGraduationCapSolid"
     }
   ]
 }
