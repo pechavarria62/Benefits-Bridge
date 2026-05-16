@@ -3,6 +3,7 @@
     {
       "id": "snap",
       "name": "SNAP (Food Assistance)",
+      "description": "Provides monthly benefits to help low-income individuals and families purchase food.",
       "amount": 250,
       "unit": "month",
       "icon": "LiaUtensilsSolid"
@@ -10,6 +11,7 @@
     {
       "id": "housing",
       "name": "Housing Assistance/Section 8",
+      "description": "Offers rental assistance to low-income households, helping them afford safe and stable housing.",
       "unit": "month",
       "amount": 950,
       "icon": "LiaHomeSolid"
@@ -17,6 +19,7 @@
     {
       "id": "medicaid",
       "name": "Medicaid (Healthcare)",
+      "description": "Provides low-cost or free health coverage to eligible individuals and families, including doctor visits, hospital care, and prescription drugs.",
       "unit": "month",
       "amount": 200,
       "icon": "LiaHeartbeatSolid"
@@ -24,6 +27,7 @@
     {
       "id": "tanf",
       "name": "TANF (Cash Assistance)",
+      "description": "Provides temporary cash assistance and work support services to low-income families with children to help them meet basic needs.",
       "unit": "month",
       "amount": 400,
       "icon": "LiaHandHoldingHeartSolid"
@@ -31,6 +35,7 @@
     {
       "id": "ssi",
       "name": "SSI (Supplemental Security Income)",
+      "description": "Provides monthly payments to individuals who are elderly, blind, or disabled and have limited income and resources.",
       "unit": "month",
       "amount": 943,
       "icon": "LiaUserTieSolid"
@@ -38,6 +43,7 @@
     {
       "id": "ssdi",
       "name": "SSDI (Social Security Disability)",
+      "description": "Provides monthly benefits to individuals who are unable to work due to a medical condition expected to last at least 12 months or result in death.",
       "unit": "month",
       "amount": 1350,
       "icon": "LiaUserCheckSolid"
@@ -45,6 +51,7 @@
     {
       "id": "unemployment",
       "name": "Unemployment Insurance",
+      "description": "Provides temporary income support to workers who have lost their job through no fault of their own.",
       "unit": "week",
       "amount": 400,
       "icon": "LiaBriefcaseSolid"
@@ -52,6 +59,7 @@
     {
       "id": "wic",
       "name": "WIC (Women, Infants, Children)",
+      "description": "Provides nutritional support to eligible pregnant women, breastfeeding mothers, and young children through food benefits and nutrition education.",
       "unit": "month",
       "amount": 150,
       "icon": "LiaChildSolid"
@@ -59,6 +67,7 @@
     {
       "id": "liheap",
       "name": "LIHEAP (Utility Assistance)",
+      "description": "Helps low-income households pay heating, cooling, and electricity bills, as well as emergency energy-related repairs.",
       "unit": "year",
       "amount": 1200,
       "icon": "LiaLightbulbSolid"
@@ -66,20 +75,23 @@
     {
       "id": "chip",
       "name": "CHIP (Children's Health Insurance)",
+      "description": "Provides low-cost health insurance coverage for uninsured children in families that earn too much for Medicaid.",
       "unit": "month",
       "amount": 0,
       "icon": "LiaHeartSolid"
     },
     {
-      "id": "childcare",
-      "name": "Child Care Assistance",
+      "id": "CCA",
+      "name": "CCA Child Care Assistance",
+      "description": "Helps eligible low-income families pay for child care so they can work, attend school, or participate in job training.",
       "unit": "month",
       "amount": 600,
-      "icon": "LiaPlay Solid"
+      "icon": "LiaPlaySolid"
     },
     {
       "id": "eitc",
       "name": "EITC (Earned Income Tax Credit)",
+      "description": "A tax credit for low-income workers that reduces taxes owed and may provide a refund, rewarding work and offsetting the cost of living.",
       "unit": "year",
       "amount": 3600,
       "icon": "LiaMoneyBillWaveSolid"
@@ -87,13 +99,15 @@
     {
       "id": "veterans",
       "name": "Veterans Benefits (VA)",
+      "description": "Provides disability compensation, pensions, and other support services to eligible veterans and their families.",
       "unit": "month",
       "amount": 1000,
-      "icon": "LiaFlagUSASolid"
+      "icon": "LiaFlagUsaSolid"
     },
     {
       "id": "general_assistance",
       "name": "General/Emergency Assistance",
+      "description": "Provides emergency financial assistance to individuals facing immediate hardship or crisis situations.",
       "unit": "month",
       "amount": 200,
       "icon": "LiaHandshakeSolid"
@@ -101,6 +115,7 @@
     {
       "id": "food_pantry",
       "name": "Food Pantry Services",
+      "description": "Community-based food distribution programs providing free groceries to individuals and families in need.",
       "unit": "month",
       "amount": 100,
       "icon": "LiaBoxOpenSolid"
@@ -108,6 +123,7 @@
     {
       "id": "cadc",
       "name": "CADC (Case Management/Support)",
+      "description": "Professional support services helping clients navigate benefits, find employment, and access community resources.",
       "unit": "month",
       "amount": 0,
       "icon": "LiaClipboardListSolid"
@@ -115,6 +131,7 @@
     {
       "id": "LIHEAP_emergency",
       "name": "Emergency Housing Assistance",
+      "description": "Provides emergency financial aid for eviction prevention, rental assistance, and temporary housing placement.",
       "unit": "month",
       "amount": 500,
       "icon": "LiaExclamationCircleSolid"
@@ -122,6 +139,7 @@
     {
       "id": "transit",
       "name": "Public Transit Assistance",
+      "description": "Subsidized or free public transportation passes helping low-income individuals get to work and access services.",
       "unit": "month",
       "amount": 50,
       "icon": "LiaBusAltSolid"
@@ -129,6 +147,7 @@
     {
       "id": "phone",
       "name": "Lifeline Phone Program",
+      "description": "Provides discounted or free phone service to eligible low-income households to help them stay connected.",
       "unit": "month",
       "amount": 15,
       "icon": "LiaPhoneSolid"
@@ -136,6 +155,7 @@
     {
       "id": "job_training",
       "name": "Job Training/WIOA Programs",
+      "description": "Provides free job training, career counseling, and employment services to help individuals enter or advance in the workforce.",
       "unit": "month",
       "amount": 0,
       "icon": "LiaGraduationCapSolid"

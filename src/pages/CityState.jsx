@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { LiaInfoSolid } from "react-icons/lia";
 import benefitsData from "../lib/benefits.json";
 import Iconz from "../components/IconMapper";
 
@@ -20,6 +21,8 @@ function CityState() {
     },
   });
   const [benefits, setBenefits] = useState([]);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [selectedBenefitId, setSelectedBenefitId] = useState(null);
 
   useEffect(() => {
     setBenefits(benefitsData.benefits);
@@ -159,41 +162,66 @@ function CityState() {
         </>
       ) : (
         <>
-          <h2 className="text-5xl font-bold text-black mb-2 flex flex-col">
+          <h2 className="text-5xl font-bold text-black mb-2 flex flex-row items-center gap-2">
             Select Benefits
+            <button
+              onClick={() => {
+                setSelectedBenefitId(null);
+                setShowInfoModal(true);
+              }}
+              className="text-[#5664f5] hover:text-purple-600 focus:outline-none text-3xl"
+              title="View all benefits information"
+            >
+              <LiaInfoSolid />
+            </button>
           </h2>
-          <ul className=" text-[#5664f5] px-2 w-72 ">
-            {benefits.map((benefit) => (
-              <li key={benefit.id} className="w-full">
-                <label className="flex items-center gap-4 mb-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="flex-shrink-0"
-                    checked={formData.selectedBenefits.includes(benefit.id)}
-                    onChange={() => toggleBenefit(benefit.id)}
-                  />
-                  <span className="flex-shrink-0 text-[#5664f5] text-2xl">
-                    <Iconz name={benefit.icon} />
-                  </span>
-                  <span className="text-black flex-shrink-0 w-20">
-                    {benefit.name}{" "}
-                  </span>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    placeholder={`$${benefit.amount}`}
-                    value={formData.benefitAmounts[benefit.id] || ""}
-                    onChange={(e) =>
-                      handleBenefitAmountChange(benefit.id, e.target.value)
-                    }
-                    className="bg-white text-[#5664f5] border border-solid
-                      border-[#5664f5] rounded-lg py-0 px-2 w-24"
-                  />
-                </label>
-              </li>
-            ))}
-          </ul>
+          <div
+            className="rounded-lg p-4 w-96 max-h-96 overflow-y-auto bg-white hide-scrollbar"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            <ul className="text-[#5664f5] w-full">
+              {benefits.map((benefit) => (
+                <li key={benefit.id} className="w-full">
+                  <label className="flex items-center gap-4 mb-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="flex-shrink-0"
+                      checked={formData.selectedBenefits.includes(benefit.id)}
+                      onChange={() => toggleBenefit(benefit.id)}
+                    />
+                    <span className="flex-shrink-0 text-[#5664f5] text-2xl">
+                      <Iconz name={benefit.icon} />
+                    </span>
+                    <span className="text-black flex-shrink-0 flex items-center gap-1">
+                      <span className="w-20">{benefit.name}</span>
+                      <button
+                        onClick={() => {
+                          setSelectedBenefitId(benefit.id);
+                          setShowInfoModal(true);
+                        }}
+                        className="text-[#5664f5] hover:text-purple-600 focus:outline-none text-sm"
+                        title={`More info about ${benefit.name}`}
+                      >
+                        <LiaInfoSolid size={16} />
+                      </button>
+                    </span>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      placeholder={`$${benefit.amount}`}
+                      value={formData.benefitAmounts[benefit.id] || ""}
+                      onChange={(e) =>
+                        handleBenefitAmountChange(benefit.id, e.target.value)
+                      }
+                      className="bg-white text-[#5664f5] border border-solid
+                        border-[#5664f5] rounded-lg py-0 px-2 w-24"
+                    />
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <h2 className="text-5xl font-bold text-black mb-2 flex flex-col mt-4">
             Job Details
@@ -305,6 +333,77 @@ function CityState() {
           >
             Continue
           </button>
+
+          {/* Info Modal */}
+          {showInfoModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+              <div className="bg-white rounded-lg p-6 max-w-2xl max-h-96 overflow-y-auto w-full">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-2xl font-bold text-black">
+                    {selectedBenefitId
+                      ? `${benefits.find((b) => b.id === selectedBenefitId)?.name}`
+                      : "All Benefits"}
+                  </h3>
+                  <button
+                    onClick={() => setShowInfoModal(false)}
+                    className="text-gray-600 hover:text-gray-900 text-2xl font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {selectedBenefitId ? (
+                  // Single benefit view
+                  (() => {
+                    const benefit = benefits.find(
+                      (b) => b.id === selectedBenefitId,
+                    );
+                    return benefit ? (
+                      <div className="border-l-4 border-[#5664f5] pl-4">
+                        <p className="text-gray-700 mb-2">
+                          <strong>ID:</strong> {benefit.id}
+                        </p>
+                        <p className="text-gray-700 mb-2">
+                          <strong>Name:</strong> {benefit.name}
+                        </p>
+                        <p className="text-gray-700 mb-2">
+                          <strong>Description:</strong> {benefit.description}
+                        </p>
+                        <p className="text-gray-700">
+                          <strong>Amount:</strong> ${benefit.amount} per{" "}
+                          {benefit.unit}
+                        </p>
+                      </div>
+                    ) : null;
+                  })()
+                ) : (
+                  // All benefits view
+                  <div className="space-y-4">
+                    {benefits.map((benefit) => (
+                      <div
+                        key={benefit.id}
+                        className="border-l-4 border-[#5664f5] pl-4 pb-4"
+                      >
+                        <p className="text-sm text-gray-600">
+                          <strong>ID:</strong> {benefit.id}
+                        </p>
+                        <p className="text-lg font-semibold text-[#5664f5] mb-1">
+                          {benefit.name}
+                        </p>
+                        <p className="text-gray-700 mb-1 text-sm">
+                          {benefit.description}
+                        </p>
+                        <p className="text-gray-600 text-sm">
+                          <strong>Amount:</strong> ${benefit.amount} per{" "}
+                          {benefit.unit}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>
