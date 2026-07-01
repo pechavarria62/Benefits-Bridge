@@ -162,7 +162,7 @@ function CityState() {
         </>
       ) : (
         <>
-          <h2 className="text-5xl font-bold text-black mb-2 flex flex-row items-center gap-2">
+          <h2 className="text-4xl font-bold text-black mb-2 flex flex-row items-center gap-2">
             Select Benefits
             <button
               onClick={() => {
@@ -192,18 +192,8 @@ function CityState() {
                     <span className="flex-shrink-0 text-[#5664f5] text-2xl">
                       <Iconz name={benefit.icon} />
                     </span>
-                    <span className="text-black flex-shrink-0 flex items-center gap-1">
+                    <span className="text-black flex-shrink-0">
                       <span className="w-20">{benefit.name}</span>
-                      <button
-                        onClick={() => {
-                          setSelectedBenefitId(benefit.id);
-                          setShowInfoModal(true);
-                        }}
-                        className="text-[#5664f5] hover:text-purple-600 focus:outline-none text-sm"
-                        title={`More info about ${benefit.name}`}
-                      >
-                        <LiaInfoSolid size={16} />
-                      </button>
                     </span>
                     <input
                       type="number"
@@ -223,7 +213,7 @@ function CityState() {
             </ul>
           </div>
 
-          <h2 className="text-5xl font-bold text-black mb-2 flex flex-col mt-4">
+          <h2 className="text-4xl font-bold text-black mb-2 flex flex-col mt-4">
             Job Details
           </h2>
           <div className="flex flex-col items-center align-center">
@@ -231,7 +221,7 @@ function CityState() {
               <label>
                 Employment
                 <select
-                  className="text-[13px] text-[#5664f5] mx-3 py-0 px-2
+                  className="text-[13px] text-[#5664f5] mx-19 lg:mx-17 py-0 px-2
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   font-lexendDeca leading-[35.333335876464844px]
@@ -250,7 +240,7 @@ function CityState() {
               <label>
                 Hours per Week
                 <select
-                  className="text-[13px] text-[#5664f5] mx-3 py-0 px-2
+                  className="text-[13px] text-[#5664f5] mx-12 lg:mx-11 py-0 px-2
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   font-lexendDeca leading-[35.333335876464844px]
@@ -271,7 +261,7 @@ function CityState() {
               <label>
                 Pay Type
                 <select
-                  className="text-[13px] text-[#5664f5] mx-3 py-0 px-2
+                  className="text-[13px] text-[#5664f5] mx-24 lg:mx-11 py-0 px-2
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   font-lexendDeca leading-[35.333335876464844px]
@@ -288,7 +278,7 @@ function CityState() {
               <label>
                 Pay Rate
                 <select
-                  className="text-[13px] text-[#5664f5] mx-3 py-0 px-2
+                  className="text-[13px] text-[#5664f5] mx-24 lg:mx-11 py-0 px-2
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   font-lexendDeca leading-[35.333335876464844px]
@@ -309,11 +299,11 @@ function CityState() {
                   step="0.01"
                   min="0"
                   placeholder="15.00"
-                  className="text-[13px] text-[#5664f5] mx-3 py-2 px-2
+                  className="text-[13px] text-[#5664f5] mx-10 py-0 px-2
                   border border-solid bg-white
                   rounded-lg border-[#5664f5]
                   focus:outline-none 
-                  focus:text-purple-800 w-full"
+                  focus:text-purple-800 w-20"
                   value={formData.jobDetails.hourlyWage}
                   onChange={(e) =>
                     handleJobChange("hourlyWage", e.target.value)
