@@ -193,7 +193,7 @@ function CityState() {
                       <Iconz name={benefit.icon} />
                     </span>
                     <span className="text-black flex-shrink-0">
-                      <span className="w-20">{benefit.name}</span>
+                      <span className="w-20">{benefit.id}</span>
                     </span>
                     <input
                       type="number"
@@ -327,8 +327,8 @@ function CityState() {
           {/* Info Modal */}
           {showInfoModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-              <div className="bg-white rounded-lg p-6 max-w-2xl max-h-96 overflow-y-auto w-full">
-                <div className="flex justify-between items-center mb-4">
+              <div className="bg-white rounded-lg max-w-2xl max-h-96 w-full flex flex-col overflow-hidden">
+                <div className="flex justify-between items-center px-6 pt-6 pb-3 sticky top-0 bg-white z-10">
                   <h3 className="text-2xl font-bold text-black">
                     {selectedBenefitId
                       ? `${benefits.find((b) => b.id === selectedBenefitId)?.name}`
@@ -341,6 +341,8 @@ function CityState() {
                     ✕
                   </button>
                 </div>
+                <div className="px-6 pb-6 flex-1 overflow-y-auto">
+
 
                 {selectedBenefitId ? (
                   // Single benefit view
@@ -350,9 +352,6 @@ function CityState() {
                     );
                     return benefit ? (
                       <div className="border-l-4 border-[#5664f5] pl-4">
-                        <p className="text-gray-700 mb-2">
-                          <strong>ID:</strong> {benefit.id}
-                        </p>
                         <p className="text-gray-700 mb-2">
                           <strong>Name:</strong> {benefit.name}
                         </p>
@@ -374,9 +373,7 @@ function CityState() {
                         key={benefit.id}
                         className="border-l-4 border-[#5664f5] pl-4 pb-4"
                       >
-                        <p className="text-sm text-gray-600">
-                          <strong>ID:</strong> {benefit.id}
-                        </p>
+                        
                         <p className="text-lg font-semibold text-[#5664f5] mb-1">
                           {benefit.name}
                         </p>
@@ -391,6 +388,7 @@ function CityState() {
                     ))}
                   </div>
                 )}
+                </div>
               </div>
             </div>
           )}
