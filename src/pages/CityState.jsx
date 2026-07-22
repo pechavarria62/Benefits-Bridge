@@ -182,31 +182,35 @@ function CityState() {
             <ul className="text-[#5664f5] w-full">
               {benefits.map((benefit) => (
                 <li key={benefit.id} className="w-full">
-                  <label className="flex items-center gap-4 mb-2 cursor-pointer">
+                  <label className="flex items-center gap-3 mb-2 cursor-pointer w-full">
                     <input
                       type="checkbox"
                       className="flex-shrink-0"
                       checked={formData.selectedBenefits.includes(benefit.id)}
                       onChange={() => toggleBenefit(benefit.id)}
                     />
-                    <span className="flex-shrink-0 text-[#5664f5] text-2xl">
-                      <Iconz name={benefit.icon} />
-                    </span>
-                    <span className="text-black flex-shrink-0">
-                      <span className="w-20">{benefit.id}</span>
-                    </span>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      placeholder={`$${benefit.amount}`}
-                      value={formData.benefitAmounts[benefit.id] || ""}
-                      onChange={(e) =>
-                        handleBenefitAmountChange(benefit.id, e.target.value)
-                      }
-                      className="bg-white text-[#5664f5] border border-solid
-                        border-[#5664f5] rounded-lg py-0 px-2 w-24"
-                    />
+                    <div className="flex items-center justify-between gap-3 flex-1">
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <span className="flex-shrink-0 text-[#5664f5] text-2xl">
+                          <Iconz name={benefit.icon} />
+                        </span>
+                        <span className="text-black truncate">
+                          <span className="block w-20">{benefit.id}</span>
+                        </span>
+                      </div>
+                      <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder={`$${benefit.amount}`}
+                        value={formData.benefitAmounts[benefit.id] || ""}
+                        onChange={(e) =>
+                          handleBenefitAmountChange(benefit.id, e.target.value)
+                        }
+                        className="bg-white text-[#5664f5] border border-solid
+                          border-[#5664f5] rounded-lg py-0 px-2 w-24 ml-auto"
+                      />
+                    </div>
                   </label>
                 </li>
               ))}
